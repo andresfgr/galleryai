@@ -35,11 +35,7 @@ export default function Home() {
   const { data: sessionData } = useSession();
   const router = useRouter();
 
-  const { data, error, isLoading } = api.todosRouter.getImages.useQuery();
-
-  const handleLinkShoppingCar = () => {
-    void router.push("/generate/page");
-  };
+  const { data } = api.todosRouter.getImages.useQuery(); //, error, isLoading
 
   useEffect(() => {
     if (!sessionData) {

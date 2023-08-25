@@ -2,7 +2,6 @@ import { type NextPage } from "next";
 import useProtectView from "~/hooks/useProtectView";
 import { api } from "~/utils/api";
 import router from "next/router";
-import Home2 from "./buttone";
 import { Button } from "~/components/ui/button";
 // import Home2 from "../todos/buttone";
 

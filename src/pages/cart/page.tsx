@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -17,11 +17,10 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "~/components/ui/card";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 
-import { CldImage } from "next-cloudinary";
+// import { CldImage } from "next-cloudinary";
 import { Checkbox } from "~/components/ui/checkbox";
 import {
   NavigationMenu,
@@ -36,7 +35,7 @@ export default function Home() {
   const { data: sessionData } = useSession();
   const router = useRouter();
 
-  const { data, error, isLoading } = api.todosRouter.getImages.useQuery();
+  const { data } = api.todosRouter.getImages.useQuery(); //, error, isLoading
 
   useEffect(() => {
     if (!sessionData) {

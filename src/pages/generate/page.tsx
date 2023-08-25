@@ -13,7 +13,6 @@ import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 import { buttonVariants } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import {
@@ -32,7 +31,6 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import Link from "next/link";
-import { Label } from "~/components/ui/label";
 
 export default function Home() {
   const [prompt, setPrompt] = useState("");
@@ -40,7 +38,7 @@ export default function Home() {
   const [link, setLink] = useState("");
   const [printType, setPrintType] = useState("");
   const [size, setSize] = useState("");
-  const [amount, setAmount] = useState("59.99");
+  const [amount] = useState("59.99"); //, setAmount
 
   const { data: sessionData } = useSession();
   const router = useRouter();
