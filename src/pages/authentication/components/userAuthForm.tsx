@@ -14,7 +14,10 @@ import { useRouter } from "next/router";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export default function UserAuthForm({
+  className,
+  ...props
+}: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const { data: sessionData } = useSession();
