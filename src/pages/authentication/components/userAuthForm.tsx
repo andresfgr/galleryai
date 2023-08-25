@@ -23,6 +23,14 @@ export default function UserAuthForm({
   const { data: sessionData } = useSession();
   const router = useRouter();
 
+  const handleGithubLogin = async () => {
+    await signIn("github", { callbackUrl: "/" });
+  };
+
+  const handleGoogleLogin = async () => {
+    await signIn("google", { callbackUrl: "/" });
+  };
+
   function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
@@ -78,7 +86,20 @@ export default function UserAuthForm({
         variant="outline"
         type="button"
         disabled={isLoading}
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
+        onClick={
+          sessionData ? () => void signOut() : () => void handleGoogleLogin()
+        }
+      >
+        <Icons.google className="mr-2 h-4 w-4" />{" "}
+        {sessionData ? " Sign out" : " Google"}
+      </Button>
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={
+          sessionData ? () => void signOut() : () => void handleGithubLogin()
+        }
       >
         <Icons.gitHub className="mr-2 h-4 w-4" />{" "}
         {sessionData ? " Sign out" : " Github"}
