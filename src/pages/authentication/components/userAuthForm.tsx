@@ -23,9 +23,9 @@ export default function UserAuthForm({
   const { data: sessionData } = useSession();
   const router = useRouter();
 
-  const handleGithubLogin = async () => {
-    await signIn("github", { callbackUrl: "/" });
-  };
+  // const handleGithubLogin = async () => {
+  //   await signIn("github", { callbackUrl: "/" });
+  // };
 
   const handleGoogleLogin = async () => {
     await signIn("google", { callbackUrl: "/" });
@@ -93,7 +93,7 @@ export default function UserAuthForm({
         <Icons.google className="mr-2 h-4 w-4" />{" "}
         {sessionData ? " Sign out" : " Google"}
       </Button>
-      <Button
+      {/* <Button
         variant="outline"
         type="button"
         disabled={isLoading}
@@ -103,7 +103,7 @@ export default function UserAuthForm({
       >
         <Icons.gitHub className="mr-2 h-4 w-4" />{" "}
         {sessionData ? " Sign out" : " Github"}
-      </Button>
+      </Button> */}
     </div>
   );
 }

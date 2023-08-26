@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "~/lib/utils";
@@ -13,7 +13,7 @@ export default function AuthenticationPage() {
       {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {children}
       </ThemeProvider> */}
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <Image
           src="/examples/authentication-light.png"
           width={1280}
@@ -28,7 +28,7 @@ export default function AuthenticationPage() {
           alt="Authentication"
           className="hidden dark:block"
         />
-      </div>
+      </div> */}
       <div className="container relative hidden h-[1000px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
