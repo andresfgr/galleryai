@@ -7,6 +7,7 @@ import {
 } from "~/server/api/trpc";
 import { prisma } from "~/server/db";
 
+import { v2 as cloudinary } from "cloudinary";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
@@ -14,6 +15,13 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+cloudinary.config({
+  cloud_name: "diudkat4v",
+  api_key: "113933954143142",
+  api_secret: "-KHtF03fj1LsHmBdESyEgUlu2E0",
+});
 
 export const todosRouter = createTRPCRouter({
   getTodos: protectedProcedure.query(async ({ ctx }) => {
@@ -60,6 +68,7 @@ export const todosRouter = createTRPCRouter({
         console.log(error);
       }
     }),
+
   deleteTodo: protectedProcedure //adminProcedure
     .input(
       z.object({
@@ -99,9 +108,14 @@ export const todosRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        const response = await cloudinary.uploader.upload(input.link);
+        //.then((result) => console.log(result));
+
         const generateImage = await prisma.generateImage.create({
           data: {
-            link: input.link,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            link: response.secure_url,
             prompt: input.prompt,
             userId: ctx.session?.user.id,
             size: input.size,
@@ -110,6 +124,25 @@ export const todosRouter = createTRPCRouter({
           },
         });
         return generateImage;
+      } catch (error) {
+        console.log(error);
+      }
+    }),
+
+  deleteImage: protectedProcedure //adminProcedure
+    .input(
+      z.object({
+        imageId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const deleteImage = await ctx.prisma.generateImage.delete({
+          where: {
+            id: input.imageId,
+          },
+        });
+        return deleteImage;
       } catch (error) {
         console.log(error);
       }

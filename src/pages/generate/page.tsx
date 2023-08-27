@@ -62,44 +62,20 @@ export default function Home() {
   }
 
   const handleSaveImage = () => {
-    const cloud_name = "diudkat4v";
-    const upload_preset = "oemv4kec";
-    // const { files } = document.querySelector(".app_uploadInput");
-    const formData = new FormData();
-    formData.append("file", link);
-    formData.append("upload_preset", upload_preset);
-    const options = {
-      method: "POST",
-      body: formData,
-    };
-    return fetch(
-      `https://api.Cloudinary.com/v1_1/${cloud_name}/image/upload`,
-      options
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        setLink(res?.secure_url);
-        createTodosMutation.mutate(
-          { link, prompt, size, printType, amount },
-          {
-            onError(error) {
-              console.log(error);
-            },
-            onSuccess(data) {
-              setLink("");
-              setPrompt("");
-              alert(`Image with Id: ${data?.id || "default"} saved`);
-              // void router.push("/todos/show");
-            },
-          }
-        );
-      })
-      .catch((err) => console.log(err));
-
-    // console.log(name, description);
+    createTodosMutation.mutate(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      { link, prompt, size, printType, amount },
+      {
+        onError(error) {
+          console.log(error);
+        },
+        onSuccess(data) {
+          setLink("");
+          setPrompt("");
+          alert(`Image with Id: ${data?.id || "default"} saved`);
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -110,28 +86,6 @@ export default function Home() {
 
   return (
     <AspectRatio ratio={16 / 9}>
-      {/* <Button
-        variant="outline"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-4 top-4 md:left-8 md:top-8"
-        )}
-        type="button"
-        onClick={() => handleLinkShoppingCar()}
-      >
-        Car
-      </Button>
-      <Button
-        variant="outline"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute right-4 top-4 md:right-8 md:top-8"
-        )}
-        type="button"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? " Sign out" : " Github"}
-      </Button> */}
       <div className="items-start justify-center gap-6 rounded-lg p-8 md:grid ">
         <NavigationMenu>
           <NavigationMenuList>
@@ -149,13 +103,13 @@ export default function Home() {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <Link href="/orderConfirmation/page" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Order confirmation
                 </NavigationMenuLink>
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
             <NavigationMenuItem>
               <Button
                 variant="outline"
@@ -178,12 +132,9 @@ export default function Home() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Card className="w-[900px]">
+        <Card className="w-[1000px]">
           <CardHeader>
             <CardTitle>Gallery AI</CardTitle>
-            {/* <CardDescription>
-            Deploy your new project in one-click.
-          </CardDescription> */}
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
@@ -194,24 +145,22 @@ export default function Home() {
                   onChange={(event) => setPrompt(event.target.value)}
                   placeholder="What do you have in mind?"
                 />
-
-                <Button onClick={() => void generateImageByAI()}>
-                  {loading ? "Loading..." : "Generate image"}
+                <Button
+                  variant={link ? "outline" : "default"}
+                  onClick={() => void generateImageByAI()}
+                >
+                  {loading ? "Loading..." : "Generate"}
                 </Button>
                 {link && (
                   <>
                     <div className="grid grid-cols-4 gap-4">
                       <div className="grid gap-2">
-                        <Select
-                          // value={printType}
-                          onValueChange={(value) => setPrintType(value)}
-                        >
+                        <Select onValueChange={(value) => setPrintType(value)}>
                           <SelectTrigger className="w-[200px]">
                             <SelectValue placeholder="Select..." />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {/* <SelectItem value="">Select...</SelectItem> */}
                               <SelectItem value="Frame">Frame</SelectItem>
                               <SelectItem value="Poster">Poster</SelectItem>
                               <SelectItem value="Picture">Picture</SelectItem>
@@ -220,21 +169,35 @@ export default function Home() {
                         </Select>
                       </div>
                       <div className="grid gap-2">
-                        <Select
-                          // value={size}
-                          onValueChange={(value) => setSize(value)}
-                        >
+                        <Select onValueChange={(value) => setSize(value)}>
                           <SelectTrigger className="w-[200px]">
                             <SelectValue placeholder="Select..." />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {/* <SelectItem value="">Select...</SelectItem> */}
-                              <SelectItem value="small">Small</SelectItem>
-                              <SelectItem value="Medium">Medium</SelectItem>
-                              <SelectItem value="Large">Large</SelectItem>
-                              <SelectItem value="Extra-large">
-                                Extra-large
+                              <SelectItem value="Small Square">
+                                Small Square
+                              </SelectItem>
+                              <SelectItem value="Small Rectangle">
+                                Small Rectangle
+                              </SelectItem>
+                              <SelectItem value="Medium Square">
+                                Medium Square
+                              </SelectItem>
+                              <SelectItem value="Medium Rectangle">
+                                Medium Rectangle
+                              </SelectItem>
+                              <SelectItem value="Large Square">
+                                Large Square
+                              </SelectItem>
+                              <SelectItem value="Large Rectangle">
+                                Large Rectangle
+                              </SelectItem>
+                              <SelectItem value="Extra-large Square">
+                                Extra-large Square
+                              </SelectItem>
+                              <SelectItem value="Extra-large Rectangle">
+                                Extra-large Rectangle
                               </SelectItem>
                             </SelectGroup>
                           </SelectContent>
