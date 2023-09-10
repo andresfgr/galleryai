@@ -94,7 +94,7 @@ export default function Home() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Card className="w-[1000px]">
+        <Card className="w-[800px]">
           <CardHeader>
             <CardTitle>Order Confirmation</CardTitle>
           </CardHeader>
@@ -133,7 +133,7 @@ export default function Home() {
             <div className="mt-8 grid grid-cols-4 gap-4">
               <div className="grid gap-2">
                 <Select onValueChange={(value) => setSize(value)}>
-                  <SelectTrigger className="w-[200px]">
+                  <SelectTrigger className="w-auto">
                     <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>

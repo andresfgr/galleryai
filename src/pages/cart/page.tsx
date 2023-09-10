@@ -29,6 +29,19 @@ import {
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu";
 import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { toast } from "~/components/ui/use-toast";
+import { Toaster } from "~/components/ui/toaster";
 
 export default function Home() {
   const { data: sessionData } = useSession();
@@ -42,8 +55,11 @@ export default function Home() {
       console.log(error);
     },
     onSuccess(data) {
-      void utils.todosRouter.getTodos.invalidate();
-      alert(`Todo ${data?.id || "default"} deleted`);
+      void utils.todosRouter.getImages.invalidate();
+      toast({
+        title: "Success",
+        description: `Image with Id: ${data?.id || "default"} deleted`,
+      });
     },
   });
 
@@ -64,6 +80,7 @@ export default function Home() {
   return (
     <AspectRatio ratio={16 / 9}>
       <div className="items-start justify-center gap-6 rounded-lg p-8 md:grid ">
+        <Toaster />
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -97,12 +114,12 @@ export default function Home() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Card className="w-[1000px]">
+        <Card className="w-[800px]">
           <CardHeader>
             <CardTitle>Cart</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
               {data?.map((item) => {
                 return (
                   <Card key={item.id}>
@@ -136,14 +153,30 @@ export default function Home() {
                           Buy
                         </label>
                       </div>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          handleDelete(item.id);
-                        }}
-                      >
-                        Delete
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline">Delete</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cannot be undone. This will
+                              permanently delete your generated image.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => void handleDelete(item.id)}
+                            >
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </CardFooter>
                   </Card>
                 );
