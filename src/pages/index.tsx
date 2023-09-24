@@ -48,11 +48,11 @@ export default function AuthenticationPage({
     }, 3000);
   }
 
-  useEffect(() => {
-    if (sessionData) {
-      void router.push("/generate/page");
-    }
-  }, [sessionData, router]);
+  // useEffect(() => {
+  //   if (sessionData) {
+  //     void router.push("/generate/page");
+  //   }
+  // }, [sessionData, router]);
 
   //{ children }: any
   return (

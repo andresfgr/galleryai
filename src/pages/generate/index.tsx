@@ -46,8 +46,9 @@ import {
 } from "~/components/ui/alert-dialog";
 import { toast } from "~/components/ui/use-toast";
 import { Toaster } from "~/components/ui/toaster";
+import { type MyPage } from "~/types/layout";
 
-export default function Home() {
+const Home: MyPage = () => {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState("");
@@ -105,11 +106,11 @@ export default function Home() {
     setPrompt("");
   };
 
-  useEffect(() => {
-    if (!sessionData) {
-      void router.push("/");
-    }
-  }, [sessionData, router]);
+  // useEffect(() => {
+  //   if (!sessionData) {
+  //     void router.push("/");
+  //   }
+  // }, [sessionData, router]);
 
   return (
     <AspectRatio ratio={16 / 9}>
@@ -373,8 +374,8 @@ export default function Home() {
                       className="image-result"
                       src={link}
                       alt="ai generated"
-                      // width={500}
-                      // height={500}
+                    // width={500}
+                    // height={500}
                     />
                   </>
                 )}
@@ -385,4 +386,9 @@ export default function Home() {
       </div>
     </AspectRatio>
   );
-}
+};
+
+export default Home;
+Home.Layout = "Main";
+Home.Title = "Solucionado | Encuentra expertos para resolver problemas en tu hogar";
+Home.Description = "Conectamos a quienes necesitan ayuda con expertos que pueden solucionar sus inconvenientes domésticos";
