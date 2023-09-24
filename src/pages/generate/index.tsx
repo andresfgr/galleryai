@@ -63,9 +63,9 @@ const Home: MyPage = () => {
   const { data: sessionData } = useSession();
   const router = useRouter();
 
-  const createTodosMutation = api.todosRouter.saveImage.useMutation();
+  const createTodosMutation = api.generateRouter.saveImage.useMutation();
 
-  const generateImage = api.todosRouter.generateImage.useMutation({
+  const generateImage = api.generateRouter.generateImage.useMutation({
     onError(error) {
       console.log(error);
       setLoading(false);
@@ -94,7 +94,7 @@ const Home: MyPage = () => {
           setPrompt("");
           toast({
             title: "Success",
-            description: `Image with Id: ${data?.id || "default"} saved`,
+            description: `Image with Id: ${data ? data?.id : "default"} saved`,
           });
         },
       }

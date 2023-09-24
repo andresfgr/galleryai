@@ -1,6 +1,5 @@
 import { z } from "zod";
 import {
-  //adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -23,7 +22,7 @@ cloudinary.config({
   api_secret: "-KHtF03fj1LsHmBdESyEgUlu2E0",
 });
 
-export const todosRouter = createTRPCRouter({
+export const generateRouter = createTRPCRouter({
   getTodos: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.todo.findMany({
       where: {
@@ -145,6 +144,7 @@ export const todosRouter = createTRPCRouter({
         return deleteImage;
       } catch (error) {
         console.log(error);
+        return null
       }
     }),
 
